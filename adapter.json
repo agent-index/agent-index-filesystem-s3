@@ -1,0 +1,36 @@
+{
+  "name": "agent-index-filesystem-s3",
+  "display_name": "Amazon S3",
+  "version": "1.0.0",
+  "description": "Filesystem adapter for Amazon S3 object storage",
+  "author": "agent-index",
+  "license": "proprietary",
+  "core_version": "1.0.0",
+  "backend_id": "s3",
+  "auth_method": "aws-credentials",
+  "connection_schema": {
+    "bucket": {
+      "type": "string",
+      "required": true,
+      "description": "S3 bucket name."
+    },
+    "region": {
+      "type": "string",
+      "required": true,
+      "description": "AWS region (e.g., us-east-1)."
+    },
+    "prefix": {
+      "type": "string",
+      "required": false,
+      "description": "Key prefix for all paths. Omit or empty string for bucket root."
+    }
+  },
+  "required_domains": [
+    "*.amazonaws.com"
+  ],
+  "required_domains_note": "S3 endpoints are region-specific (e.g., s3.us-east-1.amazonaws.com, sts.us-east-1.amazonaws.com). The wildcard covers all regions. If your network policy requires exact domains, add: s3.{region}.amazonaws.com and sts.{region}.amazonaws.com for your configured region.",
+  "node_min_version": "18.0.0",
+  "bundle_entry": "dist/server.bundle.js",
+  "bundle_built_at": "2026-03-26T00:52:05.092Z",
+  "bundle_checksum": "sha256:a4d2e3935908ab5bad277ecea1bef2ed4bc243d08d774549afd2c7592ea084bd"
+}
