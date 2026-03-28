@@ -31825,12 +31825,12 @@ var require_dist_cjs51 = __commonJS({
       }
       return ["md/nodejs", node_process.versions.node];
     };
-    var getNodeModulesParentDirs = (dirname) => {
+    var getNodeModulesParentDirs = (dirname2) => {
       const cwd = process.cwd();
-      if (!dirname) {
+      if (!dirname2) {
         return [cwd];
       }
-      const normalizedPath = node_path.normalize(dirname);
+      const normalizedPath = node_path.normalize(dirname2);
       const parts = normalizedPath.split(node_path.sep);
       const nodeModulesIndex = parts.indexOf("node_modules");
       const parentDir = nodeModulesIndex !== -1 ? parts.slice(0, nodeModulesIndex).join(node_path.sep) : normalizedPath;
@@ -31878,8 +31878,8 @@ var require_dist_cjs51 = __commonJS({
         tscVersion = null;
         return void 0;
       }
-      const dirname = typeof __dirname !== "undefined" ? __dirname : void 0;
-      const nodeModulesParentDirs = getNodeModulesParentDirs(dirname);
+      const dirname2 = typeof __dirname !== "undefined" ? __dirname : void 0;
+      const nodeModulesParentDirs = getNodeModulesParentDirs(dirname2);
       let versionFromApp;
       for (const nodeModulesParentDir of nodeModulesParentDirs) {
         try {
@@ -41926,7 +41926,7 @@ function _addCaCert(certPath) {
 
 // ../agent-index-filesystem/src/config.js
 import { readFile } from "node:fs/promises";
-import { resolve } from "node:path";
+import { dirname, resolve } from "node:path";
 import { homedir } from "node:os";
 async function loadConfig() {
   const configPath = process.env.AIFS_CONFIG_PATH;
@@ -41961,7 +41961,15 @@ async function loadConfig() {
   if (!rf.auth) {
     throw new Error('Config missing "remote_filesystem.auth"');
   }
-  const credentialStore = (rf.auth.credential_store || "~/.agent-index/credentials/").replace(/^~/, homedir());
+  const rawCredentialStore = rf.auth.credential_store || ".agent-index/credentials/";
+  let credentialStore;
+  if (rawCredentialStore.startsWith("~")) {
+    credentialStore = rawCredentialStore.replace(/^~/, homedir());
+  } else if (rawCredentialStore.startsWith("/")) {
+    credentialStore = rawCredentialStore;
+  } else {
+    credentialStore = resolve(dirname(resolvedPath2), rawCredentialStore);
+  }
   return {
     backend: rf.backend,
     connection: rf.connection,
@@ -56039,8 +56047,8 @@ var NotEmptyError = class extends AifsError {
   }
 };
 var AuthFailedError = class extends AifsError {
-  constructor(message = "Authentication failed") {
-    super("AUTH_FAILED", message);
+  constructor(message = "Authentication failed", details = {}) {
+    super("AUTH_FAILED", message, details);
   }
 };
 var BackendError = class extends AifsError {
