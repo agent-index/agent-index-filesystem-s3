@@ -1,12 +1,12 @@
 # agent-index-filesystem-s3
 
-Amazon S3 adapter for the agent-index remote filesystem. Connects the `aifs_*` MCP tool interface to S3 object storage via the AWS SDK.
+Amazon S3 adapter for the agent-index remote filesystem. Connects the `aifs_*` tool interface to S3 object storage via the AWS SDK.
 
 ## Overview
 
 This adapter implements the `BackendAdapter` interface from `@agent-index/filesystem` against the AWS S3 API. S3 uses native object key paths, so path resolution is direct — no ID mapping or caching needed. Supports IAM credentials, AWS SSO, and S3-compatible services (MinIO, Cloudflare R2, DigitalOcean Spaces).
 
-Members never interact with this package directly. The pre-built bundle is included in the bootstrap zip during org setup and runs as a background MCP server process inside Cowork.
+Members never interact with this package directly. The pre-built bundle is included in the bootstrap zip during org setup and runs as an on-demand exec process invoked by the shell wrapper.
 
 ## Features
 
@@ -35,7 +35,7 @@ npm run build:bundle     # esbuild only (no metadata stamp)
 npm test                 # Run tests
 ```
 
-The `npm run build` command produces `dist/server.bundle.js` (a self-contained single-file MCP server) and updates `adapter.json` with the build timestamp and checksum. Commit both files together.
+The `npm run build` command produces `dist/aifs-exec.bundle.js` (a self-contained single-file exec bundle) and updates `adapter.json` with the build timestamp and checksum. Commit both files together.
 
 ## Repository Structure
 
@@ -49,7 +49,8 @@ The `npm run build` command produces `dist/server.bundle.js` (a self-contained s
 │   └── adapters/
 │       └── s3.js           # BackendAdapter implementation
 └── dist/
-    └── server.bundle.js    # Pre-built bundle (committed to repo)
+    ├── aifs-exec.bundle.js # Pre-built exec bundle (committed to repo)
+    └── aifs-exec.sh        # Shell wrapper
 ```
 
 ## License

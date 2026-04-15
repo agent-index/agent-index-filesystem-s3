@@ -30,7 +30,8 @@
   ],
   "required_domains_note": "S3 endpoints are region-specific (e.g., s3.us-east-1.amazonaws.com, sts.us-east-1.amazonaws.com). The wildcard covers all regions. If your network policy requires exact domains, add: s3.{region}.amazonaws.com and sts.{region}.amazonaws.com for your configured region.",
   "node_min_version": "18.0.0",
-  "bundle_entry": "dist/server.bundle.js",
+  "exec_bundle_entry": "dist/aifs-exec.bundle.js",
+  "exec_shell_wrapper": "dist/aifs-exec.sh",
   "bundle_built_at": "2026-03-28T18:03:46.323Z",
-  "bundle_checksum": "sha256:820257904c07898111c7f5313ee79d35af727e4b3fda53dda87f6ea9ec2caa39"
+  "exec_bundle_checksum": "sha256:820257904c07898111c7f5313ee79d35af727e4b3fda53dda87f6ea9ec2caa39"
 }
