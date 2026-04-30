@@ -5,6 +5,24 @@
   "description": "Filesystem adapter for Amazon S3 object storage",
   "author": "agent-index",
   "license": "proprietary",
+  "contract_version": "1.0.0",
+  "supported_operations": [
+    "read",
+    "write",
+    "list",
+    "exists",
+    "stat",
+    "delete",
+    "copy"
+  ],
+  "supported_operations_pending": [
+    "share",
+    "unshare",
+    "getPermissions",
+    "transferOwnership",
+    "search"
+  ],
+  "write_supports_if_revision": false,
   "core_version": "1.0.0",
   "backend_id": "s3",
   "auth_method": "aws-credentials",
